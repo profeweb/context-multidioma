@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { LocaleContext } from "./LocaleContext.js";
+import MyPage from "./MyPage.js";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  
+  constructor(props) {
+     super(props);
+
+     // Idioma per defecte 
+     this.state = {
+       preferredLocale: "es"
+     };
+  }
+
+  // Canvia l'idioma de visualització
+  changeLanguage = ({ currentTarget: { id } }) => {
+     this.setState({
+       preferredLocale: id
+     });
+  };
+   
+  // Renderitza la App amb el context associat (idioma seleccionat).
+  render() {
+     return (
+       <LocaleContext.Provider value={this.state.preferredLocale}>
+         <MyPage changeLanguage={this.changeLanguage} />
+       </LocaleContext.Provider>
+     );
+   }
 }
 
 export default App;
